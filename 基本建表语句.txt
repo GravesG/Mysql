@@ -1,0 +1,17 @@
+创建数据库
+create database gzt;
+删除数据库
+drop database gzt;
+给数据库改名
+*数据库不能改名，表和列可以改名；
+rename table stu to newstu;
+清空数据库
+truncate 表名；
+truncate和delete的区别
+truncate相当于删表在重建一张相同结构的表（id会重新开始）；
+Delete只是删除某条或者某几条记录。
+乱码问题
+服务器的编码和命令窗口的编码不一致
+set names gbk;           (告诉服务器客户端使用的是gbk编码）
+查看表结构
+desc 表名；
