@@ -1,0 +1,57 @@
+--取出以诺基亚开头的商品
+select * from goods where goods_name like "诺基亚%";
+
+--查询诺基亚N后带两个字的商品
+select * from goods where goods_name like "诺基亚N__";
+
+--查询市场价和本店价格的差值
+select goods_id,goods_name,(market_price-shop_price) as discount from goods where 1;
+
+--查询本店价格比市场价格省的钱，而且省200以上的商品；
+select goods_id,goods_name,(market_price-shop_price) as discount from goods where 
+(market_price-shop_price) > 200;
+***注意这里不能用
+select goods_id,goods_name,(market_price-shop_price) as discount from goods where 
+discount > 200;
+因为表是存在磁盘的文件中的，where是对表中的数据发挥作用，查询出数据来。
+where发挥作用是表上并没有discount列，发挥完作用，形成的结果里才有discount，对于结果中的列，
+
+--面试题：把咦个表中的num列取值范围20-29的值改为20,30-39的值改为30；
+update mian set num=floor(num/10)*10 where num >=20 and num <=39;
+
+
+--把商品名为“诺基亚***”的商品，改为HTC***
+--提示：大胆的把列看成变量，参与运算，甚至调用函数来处理substring() concat
+select goods_id,goods_name,concat('HTC',substring(goods_name,4)) from goods 
+where goods_name like'诺基亚%';
+
+(12),(22),(23),(33),(39),(40),(45),(55)
+
+
+--查询本店价格比市场价格省的钱，而且省200以上的商品(用having)
+select goods_id,goods_name,(market_price-shop_price) as discount from goods 
+where 1
+having discount > 200;
+
+--查询积压货款超过2W元的商品，以及该商品积压的货款
+select cat_id,sum(goods_name*shop_price) as zhk
+from goods
+group by cat_id
+having zhk > 20000;
+
+
+
+insert into result values
+('张三','数学',90),
+('张三','语文',50),
+('张三','地理',40),
+('李四','语文',55),
+('李四','政治',45),
+('赵柳','语文',99),
+('赵柳','政治',97),
+('王五','政治',30);
+
+
+
+select name avg(score) from result
+where 
