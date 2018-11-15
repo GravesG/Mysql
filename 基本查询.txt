@@ -33,7 +33,8 @@ select goods_id,goods_name,(market_price-shop_price) as discount from goods
 where 1
 having discount > 200;
 
---查询积压货款超过2W元的商品，以及该商品积压的货款
+--查询积压
+货款超过2W元的商品，以及该商品积压的货款
 select cat_id,sum(goods_name*shop_price) as zhk
 from goods
 group by cat_id
@@ -53,5 +54,28 @@ insert into result values
 
 
 
-select name avg(score) from result
-where 
+****查询成绩表中2门或者2门以上同学的平均成绩
+select name,avg(score),sum(score<60) as n from result
+group by name
+having n>=2;
+
+--查询商品列表在第四栏的商品 再按价格降序排序
+select goods_id,goods_name,shop_price from goods 
+where cat_id = 4
+order by shop_price desc;
+
+--查出本店销售价格最高的前三名
+select goods_id,goods_name,shop_price from goods
+order by shop_price desc
+limit 0,3;
+
+--查出本店销售价格最高的第三名到第五名
+select goods_id,goods_name,shop_price from goods
+order by shop_price desc
+limit 2,3;
+
+--查询出每个栏目下goods_id号最大（最新）的商品
+select goods_id,goods_name from  
+
+***查询每个栏目（cat_id）下goods_id最大的商品
+**********************************************************
