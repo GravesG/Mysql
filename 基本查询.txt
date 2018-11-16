@@ -74,8 +74,35 @@ select goods_id,goods_name,shop_price from goods
 order by shop_price desc
 limit 2,3;
 
---查询出每个栏目下goods_id号最大（最新）的商品
-select goods_id,goods_name from  
 
 ***查询每个栏目（cat_id）下goods_id最大的商品
-**********************************************************
+***************************************************(子连接)
+select goods_id,goods_name,cat_id from (
+select goods_id,goods_name,cat_id
+from goods order by goods_id desc) as temp
+group by cat_id;
+
+或者
+select goods_id,goods_name,cat_id from
+where goods_id in (select max(goods_id) from goods group by cat_id);
+
+--查询商品表中goods_id最大的商品（不能用排序）
+select goods_id,goods_name from goods 
+where goods_id = (select max(goods_id) from goods);
+
+-------------------------------------------------------------------
+from子查询														  |
+即，内层sql的查询结果，当成是一张临时表，供外层sql再次查询。      |
+查询结果集可以当做表看；										  |
+																  |
+select * from (select goods_id,goods_name from goods              |
+order by cat_id asc,goods_id desc) as tmp group by cat_id;        |
+-------------------------------------------------------------------
+
+
+为什么不想要null的值
+：因为不好比较，null是一种类型，比较时只能使用专门的is null 和 is not null来比较
+碰到运算符，一律返回null
+效率不高，影响提高索引的效果
+因此我们往往在建表时 用not null default '';
+
